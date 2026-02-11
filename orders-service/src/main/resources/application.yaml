@@ -24,7 +24,7 @@ spring:
       client:
         config:
           default:
-            loggerLevel: full
+            loggerLevel: basic
 
 server:
   port: 8082
@@ -70,8 +70,9 @@ resilience4j:
 
 logging:
   level:
-    com.mini_ecommerce.orders_service.client: DEBUG
+    com.mini_ecommerce.orders_service.client: INFO
     com.mini_ecommerce.orders_service.service.UserLookupService: INFO
     com.mini_ecommerce.orders_service.service.ProductLookupService: INFO
+    feign: WARN
     io.github.resilience4j.circuitbreaker: INFO
     io.github.resilience4j.retry: INFO
