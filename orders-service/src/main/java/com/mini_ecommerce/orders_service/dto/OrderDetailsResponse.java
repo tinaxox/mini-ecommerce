@@ -3,7 +3,9 @@ package com.mini_ecommerce.orders_service.dto;
 public class OrderDetailsResponse {
 
     private OrderResponse order;
-    private UserResponse user;
+    private UserResponse buyer;
+    private UserResponse seller;
+    private ProductResponse product;
 
     public OrderResponse getOrder() {
         return order;
@@ -13,11 +15,27 @@ public class OrderDetailsResponse {
         this.order = order;
     }
 
-    public UserResponse getUser() {
-        return user;
+    public UserResponse getBuyer() {
+        return buyer;
     }
 
-    public void setUser(UserResponse user) {
-        this.user = user;
+    public void setBuyer(UserResponse buyer) {
+        this.buyer = buyer;
+    }
+
+    public UserResponse getSeller() {
+        return seller;
+    }
+
+    public void setSeller(UserResponse seller) {
+        this.seller = seller;
+    }
+
+    public ProductResponse getProduct() {
+        return product;
+    }
+
+    public void setProduct(ProductResponse product) {
+        this.product = product;
     }
 }

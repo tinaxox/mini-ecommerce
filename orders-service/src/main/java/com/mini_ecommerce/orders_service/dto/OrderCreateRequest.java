@@ -1,25 +1,19 @@
 package com.mini_ecommerce.orders_service.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import java.math.BigDecimal;
 
 public class OrderCreateRequest {
 
     @NotNull
     private Long userId;
 
-    @NotBlank
-    private String itemName;
+    @NotNull
+    private Long productId;
 
     @NotNull
     @Positive
     private Integer quantity;
-
-    @NotNull
-    @Positive
-    private BigDecimal totalPrice;
 
     private String status;
 
@@ -31,12 +25,12 @@ public class OrderCreateRequest {
         this.userId = userId;
     }
 
-    public String getItemName() {
-        return itemName;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     public Integer getQuantity() {
@@ -45,14 +39,6 @@ public class OrderCreateRequest {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-    }
-
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
     }
 
     public String getStatus() {

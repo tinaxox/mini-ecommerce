@@ -7,6 +7,8 @@ public class OrderResponse {
 
     private Long id;
     private Long userId;
+    private Long productId;
+    private Long sellerUserId;
     private String itemName;
     private Integer quantity;
     private BigDecimal totalPrice;
@@ -27,6 +29,22 @@ public class OrderResponse {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public Long getSellerUserId() {
+        return sellerUserId;
+    }
+
+    public void setSellerUserId(Long sellerUserId) {
+        this.sellerUserId = sellerUserId;
     }
 
     public String getItemName() {

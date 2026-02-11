@@ -21,6 +21,12 @@ public class Order {
     private Long userId;
 
     @Column(nullable = false)
+    private Long productId;
+
+    @Column(nullable = false)
+    private Long sellerUserId;
+
+    @Column(nullable = false)
     private String itemName;
 
     @Column(nullable = false)
@@ -38,8 +44,10 @@ public class Order {
     public Order() {
     }
 
-    public Order(Long userId, String itemName, Integer quantity, BigDecimal totalPrice, String status, Instant createdAt) {
+    public Order(Long userId, Long productId, Long sellerUserId, String itemName, Integer quantity, BigDecimal totalPrice, String status, Instant createdAt) {
         this.userId = userId;
+        this.productId = productId;
+        this.sellerUserId = sellerUserId;
         this.itemName = itemName;
         this.quantity = quantity;
         this.totalPrice = totalPrice;
@@ -61,6 +69,22 @@ public class Order {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public Long getSellerUserId() {
+        return sellerUserId;
+    }
+
+    public void setSellerUserId(Long sellerUserId) {
+        this.sellerUserId = sellerUserId;
     }
 
     public String getItemName() {

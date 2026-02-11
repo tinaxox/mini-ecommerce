@@ -4,6 +4,7 @@ import com.mini_ecommerce.orders_service.dto.OrderCreateRequest;
 import com.mini_ecommerce.orders_service.dto.OrderDetailsResponse;
 import com.mini_ecommerce.orders_service.dto.OrderResponse;
 import com.mini_ecommerce.orders_service.dto.OrderUpdateRequest;
+import com.mini_ecommerce.orders_service.dto.SellerOrderNotificationResponse;
 import com.mini_ecommerce.orders_service.service.OrderService;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -48,8 +49,13 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getAll());
     }
 
+    @GetMapping("/sellers/{sellerUserId}/notifications")
+    public ResponseEntity<List<SellerOrderNotificationResponse>> getSellerNotifications(@PathVariable Long sellerUserId) {
+        return ResponseEntity.ok(orderService.getSellerNotifications(sellerUserId));
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<OrderResponse> update(@PathVariable Long id, @RequestBody OrderUpdateRequest request) {
+    public ResponseEntity<OrderResponse> update(@PathVariable Long id, @Valid @RequestBody OrderUpdateRequest request) {
         return ResponseEntity.ok(orderService.update(id, request));
     }
 

@@ -19,9 +19,22 @@ resilience4j:
         permittedNumberOfCallsInHalfOpenState: 2
         ignoreExceptions:
           - com.mini_ecommerce.orders_service.exception.NotFoundException
+      products-service:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 5s
+        permittedNumberOfCallsInHalfOpenState: 2
+        ignoreExceptions:
+          - com.mini_ecommerce.orders_service.exception.NotFoundException
   retry:
     instances:
       users-service:
+        maxAttempts: 3
+        waitDuration: 500ms
+        ignoreExceptions:
+          - com.mini_ecommerce.orders_service.exception.NotFoundException
+      products-service:
         maxAttempts: 3
         waitDuration: 500ms
         ignoreExceptions:

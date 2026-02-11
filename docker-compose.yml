@@ -31,6 +31,19 @@ services:
     ports:
       - "8081:8081"
 
+  products-service:
+    build:
+      context: ./products-service
+    depends_on:
+      - discovery-service
+      - config-service
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-service:8761/eureka/
+      - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://config-service:8888
+    ports:
+      - "8083:8083"
+
   orders-service:
     build:
       context: ./orders-service
@@ -38,6 +51,7 @@ services:
       - discovery-service
       - config-service
       - users-service
+      - products-service
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-service:8761/eureka/
       - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
@@ -52,6 +66,7 @@ services:
       - discovery-service
       - config-service
       - users-service
+      - products-service
       - orders-service
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-service:8761/eureka/

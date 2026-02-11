@@ -1,33 +1,22 @@
 package com.mini_ecommerce.orders_service.dto;
 
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import java.math.BigDecimal;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class OrderUpdateRequest {
-
-    @NotBlank
-    private String itemName;
 
     @NotNull
     @Positive
     private Integer quantity;
 
-    @NotNull
-    @Positive
-    private BigDecimal totalPrice;
-
     @NotBlank
     private String status;
 
-    public String getItemName() {
-        return itemName;
-    }
-
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
-    }
+    private final Map<String, Object> unknownFields = new LinkedHashMap<>();
 
     public Integer getQuantity() {
         return quantity;
@@ -37,19 +26,20 @@ public class OrderUpdateRequest {
         this.quantity = quantity;
     }
 
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @JsonAnySetter
+    public void captureUnknownField(String name, Object value) {
+        unknownFields.put(name, value);
+    }
+
+    public Map<String, Object> getUnknownFields() {
+        return unknownFields;
     }
 }
