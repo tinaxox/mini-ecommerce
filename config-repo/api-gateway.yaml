@@ -1,0 +1,37 @@
+server:
+  port: 8080
+
+security:
+  api-key: "Dk7uG2qv9N1zX4pR8sLm3TqY6aV0cJfH5eW1bK2mP9rS8uG7"
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: users-service
+              uri: lb://users-service
+              predicates:
+                - Path=/api/users,/api/users/**
+            - id: products-service
+              uri: lb://products-service
+              predicates:
+                - Path=/api/products,/api/products/**
+            - id: orders-service-api
+              uri: lb://orders-service
+              predicates:
+                - Path=/api/orders,/api/orders/**
+            - id: orders-service-short
+              uri: lb://orders-service
+              predicates:
+                - Path=/orders,/orders/**
+              filters:
+                - RewritePath=/orders(?<segment>/?.*), /api/orders${segment}

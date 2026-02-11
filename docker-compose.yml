@@ -1,0 +1,77 @@
+services:
+  discovery-service:
+    build:
+      context: ./discovery-service
+    ports:
+      - "8761:8761"
+
+  config-service:
+    build:
+      context: ./config-service
+    depends_on:
+      - discovery-service
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-service:8761/eureka/
+      - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
+    volumes:
+      - ./config-repo:/config-repo:ro
+    ports:
+      - "8888:8888"
+
+  users-service:
+    build:
+      context: ./users-service
+    depends_on:
+      - discovery-service
+      - config-service
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-service:8761/eureka/
+      - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://config-service:8888
+    ports:
+      - "8081:8081"
+
+  products-service:
+    build:
+      context: ./products-service
+    depends_on:
+      - discovery-service
+      - config-service
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-service:8761/eureka/
+      - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://config-service:8888
+    ports:
+      - "8083:8083"
+
+  orders-service:
+    build:
+      context: ./orders-service
+    depends_on:
+      - discovery-service
+      - config-service
+      - users-service
+      - products-service
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-service:8761/eureka/
+      - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://config-service:8888
+    ports:
+      - "8082:8082"
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+    depends_on:
+      - discovery-service
+      - config-service
+      - users-service
+      - products-service
+      - orders-service
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-service:8761/eureka/
+      - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://config-service:8888
+      - SECURITY_API_KEY=Dk7uG2qv9N1zX4pR8sLm3TqY6aV0cJfH5eW1bK2mP9rS8uG7
+    ports:
+      - "8080:8080"

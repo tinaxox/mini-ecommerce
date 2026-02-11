@@ -1,0 +1,45 @@
+
+=== PAGE 1 ===
+PDS – Projekat  
+Kreirati malu mikroservisnu  aplikaciju (tema po izboru) koja u minimalnom obimu demonstrira principe 
+distribuiranih sistema u Javi sa Spring Boot -om: razdvajanje na servise, komunikacija između servisa, 
+service discovery, API gateway i osnovna otpornost sistema.  
+1. Tema  
+Izaberite jedan domen i prilagodite nazive entiteta:  
+• Mini e- commerce: User , Order  
+• Studentski upis: Student , Enrollment  
+• Rezervacije: User , Booking  
+• Biblioteka: Reader , Loan  
+• Nešto po izboru  u dogovoru sa profesorom  
+2. Obavezni tehnički zahtevi 
+Implementirati 2 mikroservisa + discovery + gateway  (Prilagoditi konkretnoj temi. Imena servisa su 
+data kao primer za prvu temu) : 
+• Service Discovery – Eureka Server  
+o Jedan Eureka server + oba servisa registrovana kao klijenti.  
+• API Gateway –  Spring Cloud Gateway  
+o Centralna ulazna tačka; rutiranje ka servisima (npr. /api/users/** , /api/orders/**).  
+• Dva mikroservisa   
+o users -service: kompletan CRUD nad User  (validacija, H2).  
+o orders -service: CRUD nad  Order  + jedna business operacija koja poziva users -service 
+(npr. validacija userId pri kreiranju narudžbine).  
+• Komunikacija servis –servis – OpenFeign  
+o orders -service koji koristi Feign klijent ka users -service.  
+• Otpornost – Resilience4j (Circuit Breaker + Retry)  
+o Primena CB + Retry na Feign pozivu (sa kratkim fallback  odgovorom ili jasnim HTTP 
+greškama).  
+• Persistencija: H2 (in- memory) za oba servisa.  
+• Agregacioni endpoint  
+o GET /orders/{id}/details (spajanje podataka iz oba servisa preko Feign poziva).  
+3. Opciono  
+Bonus poeni, uraditi 1 –3 stavke  
+• Spring Cloud Conﬁg  Server – centralizovana konﬁguracija  
+• RabbitMQ ili Kafka –  događaj nakon POST /orders (npr. “OrderCreated”)  
+• Docker (Compose) –  podizanje celog okruženja lokalno  
+• Socket/WebSocket – kratka real -time notiﬁkacija statusa porudžbine/rezervacije  
+• Jednostavna autentikacija na gateway -u (API key ﬁlter ili BasicAuth)  
+4. Predložena arhitektura  na primeru prve teme  (moduli)  
+• discovery -service (Eureka)  
+• api-gateway (Spring Cloud Gateway) 
+• users -service (CRUD + validacija)  
+• orders -service (CRUD + Feign + Resilience4j + agregacija)  
+• (opciono) conﬁg -service, message -broker (RabbitMQ/Kafka)  
