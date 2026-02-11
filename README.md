@@ -1,4 +1,4 @@
-# Mini E-commerce (Microservices)
+﻿# Mini E-commerce (Microservices)
 
 Ideja ovog projekta jeste da prikaze osnovno obavljanje kupovine, tj. poručivanje koje bi se vršilo preko potencijalne web stranice. 
 Zamišljeno je da postoji sledeće:
@@ -7,6 +7,35 @@ Zamišljeno je da postoji sledeće:
 3. Orders service - koji sadrži informacije o kupcu, prodavcu, nazivu proizvoda, poručenoj količini, ukupnoj ceni, i status porudžbine.
 Ostali parametri koji su neophodni su id-evi, datum kreiranja i izmene. 
 
+## Dijagram komponenti
+```mermaid
+flowchart LR
+  Client[Klijent / Postman] --> Gateway[api-gateway :8080]
+
+  Gateway --> Users[users-service :8081]
+  Gateway --> Products[products-service :8083]
+  Gateway --> Orders[orders-service :8082]
+
+  Users --> UDB[(H2 usersdb)]
+  Products --> PDB[(H2 productsdb)]
+  Orders --> ODB[(H2 ordersdb)]
+
+  Orders -. OpenFeign .-> Users
+  Orders -. OpenFeign .-> Products
+
+  Gateway -. service discovery .-> Eureka[discovery-service :8761]
+  Users -. service discovery .-> Eureka
+  Products -. service discovery .-> Eureka
+  Orders -. service discovery .-> Eureka
+  Config[config-service :8888] -. service discovery .-> Eureka
+
+  Gateway -. config .-> Config
+  Users -. config .-> Config
+  Products -. config .-> Config
+  Orders -. config .-> Config
+  Config --> Repo[config-repo]
+```
+
 ## Tehnologije koje koristi
 - Java 21 (ispunjava zahtev `Java 17+`)
 - Spring Boot 3.5.7
@@ -14,7 +43,6 @@ Ostali parametri koji su neophodni su id-evi, datum kreiranja i izmene.
 - Resilience4j (Circuit Breaker + Retry)
 - H2
 - Docker Compose
-
 
 ## Tabela servisa
 | Servis | Port | Glavne rute | Odgovornost |
