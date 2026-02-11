@@ -100,3 +100,17 @@ Required headers (for all requests):
 
 ## 9) Obaveštenja za prodavca o njegovim proizvodima
 **GET** `/api/orders/sellers/{sellerUserId}/notifications`
+
+## 10) Brisanje porudžbine
+**DELETE** `/api/orders/{id}`
+
+## 11) Izmena porudžbine
+**PUT** `/api/orders/{id}`
+
+```json
+{
+  "quantity": 3,
+  "status": "CONFIRMED",
+}
+```
+Ako se bilo koje drugo polje unese, promena neće biti validna.
