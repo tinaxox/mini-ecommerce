@@ -30,6 +30,9 @@ spring:
 server:
   port: 8080
 
+security:
+  api-key: ${SECURITY_API_KEY:Dk7uG2qv9N1zX4pR8sLm3TqY6aV0cJfH5eW1bK2mP9rS8uG7}
+
 eureka:
   client:
     service-url:
