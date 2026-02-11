@@ -19,6 +19,12 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            loggerLevel: full
 
 server:
   port: 8082
@@ -61,3 +67,11 @@ resilience4j:
         waitDuration: 500ms
         ignoreExceptions:
           - com.mini_ecommerce.orders_service.exception.NotFoundException
+
+logging:
+  level:
+    com.mini_ecommerce.orders_service.client: DEBUG
+    com.mini_ecommerce.orders_service.service.UserLookupService: INFO
+    com.mini_ecommerce.orders_service.service.ProductLookupService: INFO
+    io.github.resilience4j.circuitbreaker: INFO
+    io.github.resilience4j.retry: INFO
