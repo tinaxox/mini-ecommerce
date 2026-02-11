@@ -120,7 +120,6 @@ Ukucati za svaki servis
 Primeri testova su dodati u `orders-service`:
 - `@WebMvcTest`: `OrderControllerWebMvcTest`
 - Servisni test: `OrderServiceTest`
-- `@SpringBootTest` smoke: `OrdersServiceApplicationTests`
 
 Pokretanje testova:
 ```bash
